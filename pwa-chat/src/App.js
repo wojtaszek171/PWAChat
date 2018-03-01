@@ -1,51 +1,70 @@
 import React, { Component } from 'react';
-import { Router, browserHistory, Route, Link } from 'react-router';
-import logo from './logo.svg';
-import './App.css';
-
-const Page = ({ title }) => (
-    <div className="App">
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>{title}</h2>
-      </div>
-      <p className="App-intro">
-        This is the {title} page.
-      </p>
-      <p>
-        <Link to="/">Home</Link>
-      </p>
-      <p>
-        <Link to="/about">About</Link>
-      </p>
-      <p>
-        <Link to="/settings">Settings</Link>
-      </p>
-    </div>
-);
-
-const Home = (props) => (
-  <Page title="Home"/>
-);
-
-const About = (props) => (
-  <Page title="About"/>
-);
-
-const Settings = (props) => (
-  <Page title="Settings"/>
-);
+   import axios from 'axios';
+   import Pusher from 'pusher-js';
+   import ChatList from './ChatList';
+   import ChatBox from './ChatBox';
+   import logo from './logo.svg';
+   import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <Router history={browserHistory}>
-        <Route path="/" component={Home}/>
-        <Route path="/about" component={About}/>
-        <Route path="/settings" component={Settings}/>
-      </Router>
-    );
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: '',
+      username: '',
+      chats: []
+    };
   }
+  componentDidMount() {
+        //this.setState({username: "pawel"});
+        this.setState({username: "Anonymous"})
+        const pusher = new Pusher('279efa6b9df7260189b5', {
+          cluster: 'eu',
+          encrypted: true
+        });
+        const channel = pusher.subscribe('chat');
+        channel.bind('message', data => {
+          this.setState({ chats: [...this.state.chats, data], test: '' });
+        });
+        this.handleTextChange = this.handleTextChange.bind(this);
+        this.handleTextChange1 = this.handleTextChange1.bind(this);
+      }
+
+      handleTextChange(e) {
+        if (e.keyCode === 13) {
+          const payload = {
+            username: this.state.username,
+            message: this.state.text
+          };
+          this.setState({ text: ""})
+          axios.post('http://localhost:5000/message', payload);
+        } else {
+          this.setState({ text: e.target.value });
+        }
+      }
+      handleTextChange1(e) {
+          this.setState({ username: e.target.value });
+      }
+
+      render() {
+            return (
+              <div className="App">
+                <header className="App-header">
+                  <img src={logo} className="App-logo" alt="logo" />
+                  <h1 className="App-title">Chat</h1>
+                </header>
+                <section>
+                  <ChatList chats={this.state.chats} />
+                  <ChatBox
+                    text={this.state.text}
+                    username={this.state.username}
+                    handleTextChange={this.handleTextChange}
+                    handleTextChange1={this.handleTextChange1}
+                  />
+                </section>
+              </div>
+            );
+          }
 }
 
 export default App;
