@@ -26,3 +26,15 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+body{
+  overflow: scroll !important;
+}
+.main-toolbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.chatList{
+  margin-top: 56px !important;
+}

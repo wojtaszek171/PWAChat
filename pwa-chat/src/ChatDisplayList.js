@@ -1,5 +1,5 @@
 import React from "react";
-   import "./ChatList.css";
+   import "./ChatDisplayList.css";
    export default ({ chats }) => (
      <div class="container">
      <ul>

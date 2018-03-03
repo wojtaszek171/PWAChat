@@ -1,5 +1,5 @@
 import React from "react";
-   import './ChatBox.css';
+   import './ChatInput.css';
    export default ({ text, username, handleTextChange ,handleTextChange1}) => (
      <div>
        <div className="row">
@@ -14,7 +14,7 @@ import React from "react";
              onChange={handleTextChange1}
              onKeyDown={handleTextChange1}
              /></p>
-             <input
+             <textarea
                type="text"
                value={text}
                placeholder="chat here..."

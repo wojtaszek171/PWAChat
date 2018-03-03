@@ -1,0 +1,4 @@
+apt-get install npm
+apt-get install node
+node server.js
+npm start

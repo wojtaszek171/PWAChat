@@ -5,6 +5,26 @@ const Pusher = require('pusher');
 
     const app = express();
 
+    // var mysql = require('mysql');
+
+    // Set up connection to database.
+    // var connection = mysql.createConnection({
+    //   host: 'localhost',
+    //   port: '3306',
+    //   user: 'root',
+    //   password: '',
+    //   database: 'chat',
+    // });
+    // connection.connect();
+    // connection.query('SELECT COUNT(*) FROM messages', function(err, rows) {
+    //   if (err) throw err;
+    //   console.log('Solution: ', rows.solution);
+    // });
+
+    // app.post('/messages', function(req, res) {
+    //
+    // });
+
     app.use(cors());
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json());
