@@ -8,6 +8,7 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "ip": "^1.1.5",
     "is-mobile": "^0.2.2",
     "mysql": "^2.15.0",
     "parse": "^1.11.0",
@@ -16,7 +17,8 @@
     "pusher-js": "^4.2.2",
     "react": "^16.0.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "react-tap-event-plugin": "^3.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

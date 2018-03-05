@@ -5,7 +5,7 @@ const Pusher = require('pusher');
 
     const app = express();
 
-    // var mysql = require('mysql');
+    var mysql = require('mysql');
 
     // Set up connection to database.
     // var connection = mysql.createConnection({

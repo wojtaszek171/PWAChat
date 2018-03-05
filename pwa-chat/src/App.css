@@ -38,3 +38,65 @@ body{
 .chatList{
   margin-top: 56px !important;
 }
+#root, .App, section{
+  height: 100%;
+}
+.listBox{
+  -webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+height: 100%;
+padding: 50px 0;
+overflow: scroll;
+}
+
+.inputBottom{
+  -webkit-box-shadow: 0 1px 15px rgba(0, 0, 0, .3);
+  box-shadow: 0 1px 15px rgba(0, 0, 0, .3);
+  background: white;
+  height: 50px;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+}
+.inputBottom ons-input{
+  margin: 10px;
+  width: auto;
+  position: relative;
+  float: left;
+}
+.inputBottom .sendButton{
+  float: right;
+  display: block;
+  width: 40px;
+  padding: 0;
+}
+.sendButton *{
+  cursor: pointer;
+}
+.sendButton img{
+  text-align: center;
+  padding: 0;
+  margin: auto;
+    vertical-align: middle;
+}
+.inputTop{
+  z-index: 3;
+background: white;
+  height: 30px;
+width: 85%;
+left: 0px;
+position: absolute;
+  top:56px;
+  padding: 20px;
+  padding-bottom: 0px;
+}
+.inputTop ons-input{
+  margin: auto;
+  display: block;
+  width: 100%;
+}
+button{
+  cursor:'pointer';
+}
