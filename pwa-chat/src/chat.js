@@ -5,14 +5,10 @@ import React, { Component } from 'react';
    import ChatBox from './ChatInput';
    import logo from './logo.svg';
    import sendIcon from './ic_send_white_24px.svg';
-  import {Route, NavLink, HashRouter} from "react-router-dom";
    import './App.css';
-   import 'onsenui/css/onsenui.css';
-   import 'onsenui/css/onsen-css-components.css';
-   var ons = require('onsenui');
+
    var Ons = require('react-onsenui');
-   var injectTapEventPlugin = require("react-tap-event-plugin");
-   injectTapEventPlugin();
+
 class Chat extends Component {
   constructor(props) {
     super(props);
