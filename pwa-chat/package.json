@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cors": "^2.8.4",
+    "firebase": "^4.11.0",
     "jquery": "^3.3.1",
     "jquery-ui-dist": "^1.12.1",
     "mysql": "^2.15.0",
@@ -15,12 +16,14 @@
     "react-dom": "^16.2.0",
     "react-onsenui": "^1.10.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "serve": "^6.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "ssr": "node ./server.js"
   }
 }

@@ -5,7 +5,6 @@ import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
 import {Route, NavLink, HashRouter} from "react-router-dom";
 
-
 class Blocks extends React.Component {
   constructor(props) {
     super(props);

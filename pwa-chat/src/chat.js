@@ -3,9 +3,10 @@ import React, { Component } from 'react';
    import Pusher from 'pusher-js';
    import ChatList from './ChatDisplayList';
    import ChatBox from './ChatInput';
-   import logo from './logo.svg';
+   import logo from './favicon.png';
    import sendIcon from './ic_send_white_24px.svg';
    import './App.css';
+
 
    var Ons = require('react-onsenui');
 
@@ -18,9 +19,16 @@ class Chat extends Component {
       chats: []
     };
   }
-  componentDidMount() {
-        this.setState({username: "Anonymous"})
 
+  componentDidMount() {
+        if(localStorage.getItem('username_main')==null)
+          this.setState({username: "Anonymous"})
+        else
+          this.setState({username: localStorage.getItem('username_main')})
+
+        if(localStorage.getItem('chats')!=null){
+          this.setState({chats: JSON.parse(localStorage.getItem('chats'))})
+        }
         const pusher = new Pusher('279efa6b9df7260189b5', {
           cluster: 'eu',
           encrypted: true
@@ -28,10 +36,13 @@ class Chat extends Component {
         const channel = pusher.subscribe('chat');
         channel.bind('message', data => {
           this.setState({ chats: [...this.state.chats, data], test: '' });
+          localStorage.setItem('chats', JSON.stringify(this.state.chats));
         });
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleTextChange1 = this.handleTextChange1.bind(this);
         this.sendMessageOnClick = this.sendMessageOnClick.bind(this);
+
+
       }
 
       sendMessageOnClick(e){
@@ -41,7 +52,8 @@ class Chat extends Component {
           message: this.state.text
         };
         this.setState({ text: ""})
-        axios.post('http://'+window.location.hostname+':5000/message', payload);
+        axios.post('https://server-idnnqpqxms.now.sh/message', payload);
+        localStorage.setItem('username_main', this.state.username);
         fetch('/message', {
            method: 'POST',
            data: {
@@ -63,7 +75,7 @@ class Chat extends Component {
             message: this.state.text
           };
           this.setState({ text: ""})
-          axios.post('http://'+window.location.hostname+':5000/message', payload);
+          axios.post('https://server-idnnqpqxms.now.sh/message', payload);
           fetch('/message', {
              method: 'POST',
              data: {

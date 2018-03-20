@@ -17,16 +17,16 @@ class App extends Component {
   }
   render() {
     function detectmob() {
-           if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+           if(window.innerWidth <= 800) {
              return true;
            } else {
              return false;
            }
         }
         if(detectmob()==true){
-          return (<div>
+          return (<div style={{height:"100%"}}>
             <HashRouter>
-                <div className="content">
+                <div className="content" style={{height:"100%"}}>
                   <Ons.Toolbar className="main-toolbar">
                     <div className='center'>PWA Chat</div>
                     <div className='right'>
