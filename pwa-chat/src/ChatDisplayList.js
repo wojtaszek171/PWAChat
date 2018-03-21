@@ -1,7 +1,7 @@
 import React from "react";
    import "./ChatDisplayList.css";
    export default ({ chats }) => (
-     <div class="container">
+     <div className="container">
      <ul>
        {chats.map(chat => {''
           document.getElementById( 'bottom' ).scrollIntoView();

@@ -17,9 +17,14 @@
 
     <script src="jquery-1.7.2.min.js"></script>
 <script src="jquery-ui.min.js"></script>
-<script src="onsenui.min.js"></script>
 <script src="jquery.ui.touch-punch.min.js"></script>
-
+<script src="main.js"></script>
+<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-messaging.js"></script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -36,9 +41,14 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root"></div>
+    <div id="root">
+
+</div>
+
+
     <script>
-      if ('serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+        console.log('Service Worker and Push is supported');
         window.addEventListener('load', function() {
           navigator.serviceWorker.register('service-worker.js').then(function(registration) {
             // Registration was successful
@@ -51,9 +61,154 @@
           });
         });
       } else {
+        console.console.warn("Push messaging is not supported");
         console.log('service worker is not supported');
       }
     </script>
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBbKfjo4BoTFhHM08hQe9eJDQP-Ax0pzSg",
+    authDomain: "pwa-chat-d5e68.firebaseapp.com",
+    databaseURL: "https://pwa-chat-d5e68.firebaseio.com",
+    projectId: "pwa-chat-d5e68",
+    storageBucket: "",
+    messagingSenderId: "574116472426",
+    rules: {
+        ".read": true,
+        ".write": true
+      }
+  };
+  firebase.initializeApp(config);
+  firebase.auth();
+
+  const messaging = firebase.messaging();
+  messaging.usePublicVapidKey("BNHqdNpdjsAF7P1b-WaleXfQ-Z6dXjJQq9yJqEwfLkloYac13zqqBf-gzvt9tfDUIY9XQY1mSbuJ8bKnTH7YSOQ");
+  messaging.requestPermission()
+    .then(function() {
+      console.log('Notification permission granted.');
+      // TODO(developer): Retrieve an Instance ID token for use with FCM.
+      // ...
+    })
+    .catch(function(err) {
+      console.log('Unable to get permission to notify.', err);
+    });
+
+  messaging.getToken()
+    .then(function(currentToken) {
+      if (currentToken) {
+                  console.log(currentToken);
+        sendTokenToServer(currentToken);
+        updateUIForPushEnabled(currentToken);
+
+      } else {
+        // Show permission request.
+        console.log('No Instance ID token available. Request permission to generate one.');
+        // Show permission UI.
+        updateUIForPushPermissionRequired();
+        setTokenSentToServer(false);
+      }
+    })
+    .catch(function(err) {
+      console.log('An error occurred while retrieving token. ', err);
+      showToken('Error retrieving Instance ID token. ', err);
+      setTokenSentToServer(false);
+    });
+
+  messaging.onTokenRefresh(function() {
+    messaging.getToken()
+    .then(function(refreshedToken) {
+      console.log('Token refreshed.');
+      // Indicate that the new Instance ID token has not yet been sent to the
+      // app server.
+      setTokenSentToServer(false);
+      // Send Instance ID token to app server.
+      sendTokenToServer(refreshedToken);
+      // ...
+    })
+    .catch(function(err) {
+      console.log('Unable to retrieve refreshed token ', err);
+      showToken('Unable to retrieve refreshed token ', err);
+    });
+  });
+
+  function showToken(currentToken) {
+    // Show token in console and UI.
+    // var tokenElement = document.querySelector('#token');
+    // tokenElement.textContent = currentToken;
+  }
+  // Send the Instance ID token your application server, so that it can:
+  // - send messages back to this app
+  // - subscribe/unsubscribe the token from topics
+  function sendTokenToServer(currentToken) {
+    if (!isTokenSentToServer()) {
+      console.log('Sending token to server...');
+      // TODO(developer): Send the current token to your server.
+      setTokenSentToServer(true);
+    } else {
+      console.log('Token already sent to server so won\'t send it again ' +
+          'unless it changes');
+    }
+  }
+  function isTokenSentToServer() {
+    return window.localStorage.getItem('sentToServer') == 1;
+  }
+  function setTokenSentToServer(sent) {
+    window.localStorage.setItem('sentToServer', sent ? 1 : 0);
+  }
+  function requestPermission() {
+  console.log('Requesting permission...');
+  // [START request_permission]
+  messaging.requestPermission()
+  .then(function() {
+    console.log('Notification permission granted.');
+    // TODO(developer): Retrieve an Instance ID token for use with FCM.
+    // [START_EXCLUDE]
+    // In many cases once an app has been granted notification permission, it
+    // should update its UI reflecting this.
+    resetUI();
+    // [END_EXCLUDE]
+  })
+  .catch(function(err) {
+    console.log('Unable to get permission to notify.', err);
+  });
+  // [END request_permission]
+}
+function deleteToken() {
+  // Delete Instance ID token.
+  // [START delete_token]
+  messaging.getToken()
+  .then(function(currentToken) {
+    messaging.deleteToken(currentToken)
+    .then(function() {
+      console.log('Token deleted.');
+      setTokenSentToServer(false);
+      // [START_EXCLUDE]
+      // Once token is deleted update UI.
+      resetUI();
+      // [END_EXCLUDE]
+    })
+    .catch(function(err) {
+      console.log('Unable to delete token. ', err);
+    });
+    // [END delete_token]
+  })
+  .catch(function(err) {
+    console.log('Error retrieving Instance ID token. ', err);
+    showToken('Error retrieving Instance ID token. ', err);
+  });
+}
+function updateUIForPushEnabled(currentToken) {
+  // showHideDiv(tokenDivId, true);
+  // showHideDiv(permissionDivId, false);
+  showToken(currentToken);
+}
+function updateUIForPushPermissionRequired() {
+  // showHideDiv(tokenDivId, false);
+  // showHideDiv(permissionDivId, true);
+}
+</script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -64,5 +219,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
   </body>
 </html>

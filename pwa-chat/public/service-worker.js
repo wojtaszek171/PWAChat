@@ -4,7 +4,22 @@ var doCache = false;
 // Name our cache
 var CACHE_NAME = 'my-pwa-cache-v1';
 
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js');
+
+firebase.initializeApp({
+  'messagingSenderId': '574116472426'
+});
+const messaging = firebase.messaging();
+
+messaging.onMessage(function(payload) {
+  console.log("Message received. ", payload);
+  // ...
+});
+
 // Delete old caches that are not our current one!
+
+
 self.addEventListener("activate", event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(

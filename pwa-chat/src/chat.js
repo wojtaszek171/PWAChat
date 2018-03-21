@@ -43,6 +43,9 @@ class Chat extends Component {
         this.sendMessageOnClick = this.sendMessageOnClick.bind(this);
 
 
+
+
+
       }
 
       sendMessageOnClick(e){
@@ -132,7 +135,7 @@ class Chat extends Component {
                 modifier='underbar'
                 float
                 placeholder='Message' />
-                <Ons.Button className="sendButton"  onClick={this.sendMessageOnClick} style={{margin: '6px',cursor: 'pointer'}} modifier='large'><img src={sendIcon} /></Ons.Button>
+                <Ons.Button className="sendButton"  onClick={this.sendMessageOnClick} style={{margin: '6px',cursor: 'pointer'}} modifier='large'><img src={sendIcon} alt="sendButton" /></Ons.Button>
                 </div>
               </section>
             </div>

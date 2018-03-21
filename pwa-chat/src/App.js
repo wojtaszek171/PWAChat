@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
-import {Route, NavLink, Router, HashRouter} from "react-router-dom";
+import {Route, NavLink, HashRouter} from "react-router-dom";
 import Chat from "./chat";
 import Blocks from "./blocks";
 import chatIcon from "./ic_chat.svg";
@@ -14,7 +13,9 @@ var Ons = require('react-onsenui');
 class App extends Component {
   componentDidMount(){
     $('#draggable').draggable();
+
   }
+
   render() {
     function detectmob() {
            if(window.innerWidth <= 800) {
@@ -23,7 +24,7 @@ class App extends Component {
              return false;
            }
         }
-        if(detectmob()==true){
+        if(detectmob()===true){
           return (<div style={{height:"100%"}}>
             <HashRouter>
                 <div className="content" style={{height:"100%"}}>
@@ -32,12 +33,12 @@ class App extends Component {
                     <div className='right'>
                     <NavLink to="/">
                     <Ons.ToolbarButton style={{'vertical-align': 'middle'}}>
-                      <img src={chatIcon} />
+                      <img src={chatIcon} alt="chatIcon"/>
                     </Ons.ToolbarButton>
                     </NavLink>
                     <NavLink to="/blocks">
                     <Ons.ToolbarButton style={{'vertical-align': 'middle'}}>
-                      <img src={blocksIcon} />
+                      <img src={blocksIcon} alt="blocksIcon"/>
                       {/*<Ons.Icon icon='ion-navicon, material:md-menu'></Ons.Icon>*/}
                     </Ons.ToolbarButton>
                     </NavLink>

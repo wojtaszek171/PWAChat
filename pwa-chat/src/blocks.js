@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
-import {Route, NavLink, HashRouter} from "react-router-dom";
 
 class Blocks extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
   componentDidMount() {
     $.noConflict();
     $( "#draggable" ).draggable();
