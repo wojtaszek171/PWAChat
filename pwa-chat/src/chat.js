@@ -37,6 +37,28 @@ class Chat extends Component {
         channel.bind('message', data => {
           this.setState({ chats: [...this.state.chats, data], test: '' });
           localStorage.setItem('chats', JSON.stringify(this.state.chats));
+          var key = 'AAAAhawCJmo:APA91bERskWB0uDHzHlYvhmfg03vi-B1WJnY8-bCchiLecd1bEA7amMHaiSZzCTiGzQou-TgnMDj2DH6axDpsZdLe0ZTkgaWGI6aRp8V7F_lhRuQfw4-xWMmMqRqAufXM8QWL5L8yc-C';
+          var notification = {
+            'title': 'Notification from Chat',
+            'body': 'New message!',
+            'icon': 'favicon.png',
+            'click_action': 'http://localhost:8081'
+          };
+          fetch('https://fcm.googleapis.com/fcm/send', {
+            'method': 'POST',
+            'headers': {
+              'Authorization': 'key=' + key,
+              'Content-Type': 'application/json'
+            },
+            'body': JSON.stringify({
+              'notification': notification,
+              'to': '/topics/chat'
+            })
+          }).then(function(response) {
+            console.log(response);
+          }).catch(function(error) {
+            console.error(error);
+          })
         });
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleTextChange1 = this.handleTextChange1.bind(this);

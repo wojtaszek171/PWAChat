@@ -101,7 +101,20 @@
                   console.log(currentToken);
         sendTokenToServer(currentToken);
         updateUIForPushEnabled(currentToken);
+        var key = 'AAAAhawCJmo:APA91bERskWB0uDHzHlYvhmfg03vi-B1WJnY8-bCchiLecd1bEA7amMHaiSZzCTiGzQou-TgnMDj2DH6axDpsZdLe0ZTkgaWGI6aRp8V7F_lhRuQfw4-xWMmMqRqAufXM8QWL5L8yc-C';
 
+        fetch('https://iid.googleapis.com/iid/v1/'+currentToken+'/rel/topics/chat', {
+          'method': 'POST',
+          'headers': {
+            'Authorization': 'key=' + key,
+            'Content-Type': 'application/json'
+          }
+        }).then(function(response) {
+          console.log(response);
+        }).catch(function(error) {
+          console.error(error);
+        })
+        
       } else {
         // Show permission request.
         console.log('No Instance ID token available. Request permission to generate one.');
@@ -133,6 +146,14 @@
     });
   });
 
+  messaging.onMessage(function(payload) {
+    console.log("Message received. ", payload);
+    // [START_EXCLUDE]
+    // Update the UI to include the received message.
+    //appendMessage(payload);
+    // [END_EXCLUDE]
+  });
+
   function showToken(currentToken) {
     // Show token in console and UI.
     // var tokenElement = document.querySelector('#token');
@@ -144,6 +165,7 @@
   function sendTokenToServer(currentToken) {
     if (!isTokenSentToServer()) {
       console.log('Sending token to server...');
+
       // TODO(developer): Send the current token to your server.
       setTokenSentToServer(true);
     } else {
@@ -208,6 +230,12 @@ function updateUIForPushPermissionRequired() {
   // showHideDiv(tokenDivId, false);
   // showHideDiv(permissionDivId, true);
 }
+
+
+
+
+
+
 </script>
     <!--
       This HTML file is a template.
