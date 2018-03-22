@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
-import {Route, NavLink, HashRouter} from "react-router-dom";
+import {Route, NavLink, BrowserRouter} from "react-router-dom";
 import Chat from "./chat";
 import Blocks from "./blocks";
 import chatIcon from "./ic_chat.svg";
@@ -26,7 +26,7 @@ class App extends Component {
         }
         if(detectmob()===true){
           return (<div style={{height:"100%"}}>
-            <HashRouter>
+            <BrowserRouter>
                 <div className="content" style={{height:"100%"}}>
                   <Ons.Toolbar className="main-toolbar">
                     <div className='center'>PWA Chat</div>
@@ -47,7 +47,7 @@ class App extends Component {
                   <Route exact path="/" component={Chat}/>
                   <Route path="/blocks" component={Blocks}/>
                 </div>
-            </HashRouter>
+            </BrowserRouter>
             </div>
         );
       }else{
@@ -55,7 +55,7 @@ class App extends Component {
 
             <div className="App">
               <content>
-              <HashRouter>
+              <BrowserRouter>
                         <div>
                           <ul className="header">
                             <li><NavLink exact to="/">Home</NavLink></li>
@@ -66,7 +66,7 @@ class App extends Component {
                             <Route path="/blocks" component={Blocks}/>
                           </div>
                         </div>
-              </HashRouter>
+              </BrowserRouter>
               </content>
             </div>
     );
