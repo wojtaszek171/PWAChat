@@ -102,6 +102,7 @@ class Chat extends Component {
           };
           this.setState({ text: ""})
           axios.post('https://server-idnnqpqxms.now.sh/message', payload);
+          localStorage.setItem('username_main', this.state.username);
           fetch('/message', {
              method: 'POST',
              data: {

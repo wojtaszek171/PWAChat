@@ -13,7 +13,6 @@ var Ons = require('react-onsenui');
 class App extends Component {
   componentDidMount(){
     $('#draggable').draggable();
-
   }
 
   render() {

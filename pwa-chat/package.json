@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "add-to-homescreen": "^3.2.6",
     "axios": "^0.18.0",
     "cors": "^2.8.4",
     "firebase": "^4.11.0",
